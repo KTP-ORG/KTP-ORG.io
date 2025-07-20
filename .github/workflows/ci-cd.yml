@@ -1,0 +1,27 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]   # Trigger pipeline when a pull request is opened/updated to 'main'.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest   # Use the latest Ubuntu runner for CI.
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Check out the code from the repository.
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Set Node.js version (update as needed).
+    
+    - name: Install dependencies
+      run: npm ci   # Install project dependencies using npm.
+
+    - name: Build project
+      run: npm run build  # Run the build command (e.g., Next.js build for React apps).
+
